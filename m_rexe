@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ -z "$1" ];
+then	echo "Usage is m_rexe '<bash-commands>'"
+	exit;
+else echo "running command $1";
+fi
+
+echo "Give me a load balancer name and press <enter>"
+read ELB_NAME
+new_prod_instances=`aws elb describe-load-balancers --region us-east-1 --load-balancer-names $ELB_NAME | grep InstanceId | awk -F ':' '{print $2}' | tr '"' ' '`
+for new_prod_instance in $new_prod_instances
+do
+  instance_url=`aws ec2 describe-instances --instance-ids $new_prod_instance --region us-east-1 | grep PublicDnsName | awk -F ':' '{print $2}' | awk -F '"' '{print $2}'`
+  i="ec2-user@$instance_url"
+  echo Going through: $i
+  ssh  -t $i $1
+#  elb_instances_arr+=`aws ec2 describe-instances --instance-ids $new_prod_instance --region us-east-1 | grep PublicDnsName | awk -F ':' '{print $2}' | awk -F '"' '{print $2}' | tr '"' ' ' `
+done
+
