@@ -1,1 +1,2 @@
+#!/bin/bash
 du -cks * | sort -rn | head
