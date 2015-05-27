@@ -13,7 +13,6 @@ do
   instance_url=`aws ec2 describe-instances --instance-ids $new_prod_instance --region us-east-1 | grep PublicDnsName | awk -F ':' '{print $2}' | awk -F '"' '{print $2}'`
   i="ec2-user@$instance_url"
   echo Going through: $i
-  ssh  -t $i $1
-#  elb_instances_arr+=`aws ec2 describe-instances --instance-ids $new_prod_instance --region us-east-1 | grep PublicDnsName | awk -F ':' '{print $2}' | awk -F '"' '{print $2}' | tr '"' ' ' `
+  ssh -t $i -i ~/.ssh/test_beanstalk1.pem $1 
 done
 
