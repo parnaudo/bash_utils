@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+
+for i in `cat /root/push/machine_list_main`
+
+do
+
+        echo "Going through: $i" 
+
+        ssh -t $i $1
+
+done
