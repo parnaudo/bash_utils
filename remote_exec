@@ -1,13 +1,31 @@
 #!/bin/bash
 
+keyname=~/.ssh/euclid-mesos-prod
+filename=mesosList.list
+usage="-f filename -k keyname"
+while [ "$1" != "" ]; do
+    case $1 in
+        -f | --file )           shift
+                                filename=$1
+                                ;;
+        -k | --keyname )    keyname=1
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
 
 
 for i in `cat mesosList.list`
 
 do
 
-        echo "Going through: $i" 
+        echo "Going through: ubuntu@$i".
 
-        ssh -t $i $1
+        ssh -i keyname -t ubuntu@$i $1
 
 done
