@@ -1,31 +1,25 @@
 #!/bin/bash
 
-keyname=~/.ssh/euclid-mesos-prod
-filename=mesosList.list
-usage="-f filename -k keyname"
-while [ "$1" != "" ]; do
-    case $1 in
-        -f | --file )           shift
-                                filename=$1
-                                ;;
-        -k | --keyname )    keyname=1
-                                ;;
-        -h | --help )           usage
-                                exit
-                                ;;
-        * )                     usage
-                                exit 1
-    esac
-    shift
-done
+function usage
+{
+    echo "usage: remote_exec filepath keypath bash_command"
+}
+echo $#
+if test "$#" -ne 3; then
+	usage
+	exit
+fi
+filepath=$1
+keypath=$2
+bash_command=$3
 
-
-for i in `cat mesosList.list`
+for i in `cat filepath`
 
 do
 
         echo "Going through: ubuntu@$i".
 
-        ssh -i keyname -t ubuntu@$i $1
+        ssh -i keypath -t ubuntu@$i bash_command
 
 done
+
