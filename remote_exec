@@ -4,7 +4,7 @@ function usage
 {
     echo "usage: remote_exec filepath keypath bash_command"
 }
-echo $#
+
 if test "$#" -ne 3; then
 	usage
 	exit
@@ -13,13 +13,13 @@ filepath=$1
 keypath=$2
 bash_command=$3
 
-for i in `cat filepath`
+for i in `cat $filepath`
 
 do
 
         echo "Going through: ubuntu@$i".
 
-        ssh -i keypath -t ubuntu@$i bash_command
+        ssh -i $keypath -t ubuntu@$i $bash_command
 
 done
 
