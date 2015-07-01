@@ -2,7 +2,7 @@
 
 
 
-for i in `cat /root/push/machine_list_main`
+for i in `cat mesosList.list`
 
 do
 
