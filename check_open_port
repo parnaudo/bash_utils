@@ -1,0 +1,1 @@
+nc -v -z -w 3 stackoverflow.com 80; echo $?
