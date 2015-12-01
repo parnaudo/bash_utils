@@ -1,0 +1,3 @@
+
+#this can be more granular than pkill
+ps -aef | grep chronos | grep mesos | grep jar | awk '{print $2}' | xargs -r kill -9
