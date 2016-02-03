@@ -1,3 +1,4 @@
 #!/bin/bash
 du -cks * | sort -rn | head
 find . -type f -size +50000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+find / -size +1000M -exec du -h {} \;
