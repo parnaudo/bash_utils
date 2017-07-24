@@ -6,6 +6,7 @@ else echo "running command $1";
 fi
 
 echo "Give me a load balancer name and press <enter>"
+#$ELB_NAME = 'awseb-e-y-AWSEBLoa-124YINGXLZBWE'
 read ELB_NAME
 new_prod_instances=`aws elb describe-load-balancers --region us-east-1 --load-balancer-names $ELB_NAME | grep InstanceId | awk -F ':' '{print $2}' | tr '"' ' '`
 for new_prod_instance in $new_prod_instances
@@ -13,6 +14,8 @@ do
   instance_url=`aws ec2 describe-instances --instance-ids $new_prod_instance --region us-east-1 | grep PublicDnsName | awk -F ':' '{print $2}' | awk -F '"' '{print $2}'`
   i="ec2-user@$instance_url"
   echo Going through: $i
-  ssh -t $i -i ~/.ssh/test_beanstalk1.pem $1 
+  scp -i ~/.ssh/test_beanstalk1.pem update.sh $i:~/ 
+  ssh -i ~/.ssh/test_beanstalk1.pem -t $i $1 
+#  sleep 60s
 done
 
