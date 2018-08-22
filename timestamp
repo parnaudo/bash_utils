@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -z "$1" ];
+then	echo "Usage is timestamp <unixtimestamp>"
+	exit;
+else echo "converting utc timestamp $1";
+fi
+
+date -j -f %s $1
